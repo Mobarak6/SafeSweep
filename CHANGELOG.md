@@ -1,0 +1,15 @@
+# Changelog
+
+All notable changes to SafeSweep are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
+
+## [1.0.0] - 2026-10-28
+
+### Added
+- **Caches & Junk**: measures and cleans 10 cache categories with Safe / Review / Permanent risk levels.
+- **Duplicates**: byte-for-byte duplicate finder that always keeps one copy of each file.
+- **Large Files**: lists the biggest files in any folder for manual review.
+- **Overview**: disk usage and guidance on what inflates macOS "System Data".
+- Removals go to the Trash by default.
+- Universal build (Apple Silicon + Intel) published as `.dmg` and `.zip`.
+
+[1.0.0]: https://github.com/Mobarak6/SafeSweep/releases/tag/v1.0.0

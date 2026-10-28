@@ -4,10 +4,27 @@ A native macOS app that frees disk space **without risking your data**. It clear
 
 Built with SwiftUI. No dependencies, no network access, no telemetry.
 
+[![Latest release](https://img.shields.io/github/v/release/Mobarak6/SafeSweep?label=release)](https://github.com/Mobarak6/SafeSweep/releases/latest)
+[![CI](https://github.com/Mobarak6/SafeSweep/actions/workflows/ci.yml/badge.svg)](https://github.com/Mobarak6/SafeSweep/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-macOS%2014%2B-lightgrey)
 ![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+<p align="center">
+  <a href="https://github.com/Mobarak6/SafeSweep/releases/latest/download/SafeSweep.dmg">
+    <img src="https://img.shields.io/badge/Download-SafeSweep%20for%20macOS-0A84FF?style=for-the-badge&logo=apple&logoColor=white" alt="Download SafeSweep for macOS">
+  </a>
+</p>
 
 ---
+
+## Download & install
+
+1. **[Download SafeSweep.dmg](https://github.com/Mobarak6/SafeSweep/releases/latest/download/SafeSweep.dmg)** (or the [.zip](https://github.com/Mobarak6/SafeSweep/releases/latest/download/SafeSweep.zip)). All versions are on the [Releases page](https://github.com/Mobarak6/SafeSweep/releases).
+2. Open the DMG and drag **SafeSweep** into **Applications**.
+3. **First launch only:** SafeSweep is open source and not notarized by Apple, so macOS blocks it once. Open the app, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
+
+Requires macOS 14 Sonoma or later. The app is universal and runs natively on Apple Silicon and Intel Macs.
 
 ## Features
 
@@ -48,15 +65,12 @@ SafeSweep is designed so that a mis-click cannot cost you data:
 5. **Hands off app internals.** Duplicate scans skip app bundles, Photos libraries, hidden files, `~/Library`, and tool folders such as `node_modules`, `.git`, `build`, `Pods` and `.dart_tool`. Large files under `~/Library` are flagged as *App data — leave alone*.
 6. **Confirmation before every removal**, with a list of anything macOS refused to move.
 
-## Requirements
+## Build from source
 
-- macOS 14 Sonoma or later
-- Xcode 15+ or the Swift 5.9+ command-line toolchain (`xcode-select --install`)
-
-## Getting started
+Requirements: macOS 14 Sonoma or later, and Xcode 15+ or the Swift 5.9+ command-line toolchain (`xcode-select --install`).
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Mobarak6/SafeSweep.git
 cd SafeSweep
 make run
 ```
@@ -71,9 +85,23 @@ make run
 | `make test` | Run unit tests |
 | `make install` | Build `SafeSweep.app` and copy it to `~/Applications` (same as `./build.sh`) |
 | `make run` | Install and launch |
+| `make package` | Build a universal app and package `build/SafeSweep.dmg` and `build/SafeSweep.zip` |
 | `make clean` | Delete `.build/` and `build/` |
 
 To work in Xcode, open `Package.swift` and run the `SafeSweep` scheme.
+
+## Releasing
+
+Releases are built and published by GitHub Actions ([`release.yml`](.github/workflows/release.yml)). To ship a new version:
+
+1. Add the changes to [`CHANGELOG.md`](CHANGELOG.md).
+2. Tag and push:
+   ```bash
+   git tag v1.1.0
+   git push origin v1.1.0
+   ```
+
+The workflow runs the tests, builds a universal app stamped with the tag's version, and attaches `SafeSweep.dmg` and `SafeSweep.zip` to a new GitHub Release. The download links in this README always point to the latest release.
 
 ## Permissions
 
@@ -89,10 +117,12 @@ The app is not sandboxed, because it needs to read caches across your home folde
 SafeSweep/
 ├── Package.swift                  # SwiftPM manifest (macOS 14+)
 ├── Info.plist                     # App bundle metadata
-├── build.sh                       # Builds, signs and installs the .app
+├── build.sh                       # Builds, signs, installs or packages the .app
 ├── Makefile                       # Convenience targets
+├── CHANGELOG.md                   # Release notes
+├── .github/workflows/             # CI (build + test) and Release (tag → .dmg/.zip)
 ├── Sources/SafeSweep/
-│   ├── SafeSweepApp.swift    # App entry point
+│   ├── SafeSweepApp.swift         # App entry point
 │   ├── Core/
 │   │   ├── CleanupCatalog.swift   # Cache categories, locations and risk levels
 │   │   ├── DuplicateFinder.swift  # Size → partial hash → full SHA-256 matching
@@ -100,7 +130,7 @@ SafeSweep/
 │   │   └── FileUtils.swift        # Sizing, Trash/remove, Finder helpers
 │   ├── Models/                    # @MainActor view models (one per screen)
 │   └── Views/                     # SwiftUI screens
-└── Tests/SafeSweepTests/     # Duplicate-detection tests
+└── Tests/SafeSweepTests/          # Duplicate-detection tests
 ```
 
 ### Adding a cache category
@@ -131,7 +161,7 @@ These often dominate "System Data", but they are better managed by their owners:
 ## Troubleshooting
 
 - **Space didn't change after cleaning:** items moved to the Trash still use space until you empty it. *Settings → Storage* can also take a few minutes to refresh.
-- **"SafeSweep can't be opened":** the app is ad-hoc signed. Right-click it in Finder and choose **Open** the first time.
+- **"SafeSweep can't be opened" / "Apple could not verify…":** the app is not notarized. Go to *System Settings → Privacy & Security* and click **Open Anyway**. Alternatively, run `xattr -dr com.apple.quarantine /Applications/SafeSweep.app` once.
 - **Scan feels slow:** large Gradle or Docker folders take a while to measure. Rescans are faster once the file system metadata is cached.
 
 ## License
