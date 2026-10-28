@@ -6,11 +6,11 @@ build:        ## Compile a debug build
 test:         ## Run the unit tests
 	swift test
 
-app install:  ## Build "Storage Cleaner.app" and install it into ~/Applications
+app install:  ## Build "SafeSweep.app" and install it into ~/Applications
 	./build.sh
 
 run: install  ## Build, install and launch the app
-	open "$(HOME)/Applications/Storage Cleaner.app"
+	open "$(HOME)/Applications/SafeSweep.app"
 
 clean:        ## Remove build artifacts
 	rm -rf .build build

@@ -2,10 +2,10 @@
 import PackageDescription
 
 let package = Package(
-    name: "StorageCleaner",
+    name: "SafeSweep",
     platforms: [.macOS(.v14)],
     targets: [
-        .executableTarget(name: "StorageCleaner", path: "Sources/StorageCleaner"),
-        .testTarget(name: "StorageCleanerTests", dependencies: ["StorageCleaner"], path: "Tests/StorageCleanerTests"),
+        .executableTarget(name: "SafeSweep", path: "Sources/SafeSweep"),
+        .testTarget(name: "SafeSweepTests", dependencies: ["SafeSweep"], path: "Tests/SafeSweepTests"),
     ]
 )

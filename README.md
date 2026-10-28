@@ -1,4 +1,4 @@
-# Storage Cleaner
+# SafeSweep
 
 A native macOS app that frees disk space **without risking your data**. It clears caches that rebuild themselves, finds byte-for-byte duplicate files, and surfaces the largest files on your disk, and by default everything it removes goes to the Trash so it can be restored.
 
@@ -39,7 +39,7 @@ Built with SwiftUI. No dependencies, no network access, no telemetry.
 
 ## Safety model
 
-Storage Cleaner is designed so that a mis-click cannot cost you data:
+SafeSweep is designed so that a mis-click cannot cost you data:
 
 1. **Trash by default.** Removed items are moved to the Trash. You can opt out for caches only; duplicates and large files always go to the Trash.
 2. **Conservative defaults.** Only categories marked *Safe* are pre-selected. Large Files pre-selects nothing.
@@ -57,11 +57,11 @@ Storage Cleaner is designed so that a mis-click cannot cost you data:
 
 ```bash
 git clone <repository-url>
-cd StorageCleaner
+cd SafeSweep
 make run
 ```
 
-`make run` builds a release binary, wraps it in `Storage Cleaner.app`, ad-hoc signs it, installs it into `~/Applications` and launches it.
+`make run` builds a release binary, wraps it in `SafeSweep.app`, ad-hoc signs it, installs it into `~/Applications` and launches it.
 
 ### Make targets
 
@@ -69,30 +69,30 @@ make run
 |---|---|
 | `make build` | Debug build |
 | `make test` | Run unit tests |
-| `make install` | Build `Storage Cleaner.app` and copy it to `~/Applications` (same as `./build.sh`) |
+| `make install` | Build `SafeSweep.app` and copy it to `~/Applications` (same as `./build.sh`) |
 | `make run` | Install and launch |
 | `make clean` | Delete `.build/` and `build/` |
 
-To work in Xcode, open `Package.swift` and run the `StorageCleaner` scheme.
+To work in Xcode, open `Package.swift` and run the `SafeSweep` scheme.
 
 ## Permissions
 
 The app is not sandboxed, because it needs to read caches across your home folder.
 
 - The first time you scan **Desktop**, **Documents** or **Downloads**, macOS asks for access. Allow it.
-- To measure and empty the **Trash**, grant **Full Disk Access**: *System Settings → Privacy & Security → Full Disk Access → +* and add `Storage Cleaner.app`. Without it the Trash row shows 0.
+- To measure and empty the **Trash**, grant **Full Disk Access**: *System Settings → Privacy & Security → Full Disk Access → +* and add `SafeSweep.app`. Without it the Trash row shows 0.
 - Some caches belong to running apps or are protected by macOS. These are skipped and listed after a clean; nothing else is affected.
 
 ## Project structure
 
 ```
-StorageCleaner/
+SafeSweep/
 ├── Package.swift                  # SwiftPM manifest (macOS 14+)
 ├── Info.plist                     # App bundle metadata
 ├── build.sh                       # Builds, signs and installs the .app
 ├── Makefile                       # Convenience targets
-├── Sources/StorageCleaner/
-│   ├── StorageCleanerApp.swift    # App entry point
+├── Sources/SafeSweep/
+│   ├── SafeSweepApp.swift    # App entry point
 │   ├── Core/
 │   │   ├── CleanupCatalog.swift   # Cache categories, locations and risk levels
 │   │   ├── DuplicateFinder.swift  # Size → partial hash → full SHA-256 matching
@@ -100,7 +100,7 @@ StorageCleaner/
 │   │   └── FileUtils.swift        # Sizing, Trash/remove, Finder helpers
 │   ├── Models/                    # @MainActor view models (one per screen)
 │   └── Views/                     # SwiftUI screens
-└── Tests/StorageCleanerTests/     # Duplicate-detection tests
+└── Tests/SafeSweepTests/     # Duplicate-detection tests
 ```
 
 ### Adding a cache category
@@ -131,5 +131,5 @@ These often dominate "System Data", but they are better managed by their owners:
 ## Troubleshooting
 
 - **Space didn't change after cleaning:** items moved to the Trash still use space until you empty it. *Settings → Storage* can also take a few minutes to refresh.
-- **"Storage Cleaner can't be opened":** the app is ad-hoc signed. Right-click it in Finder and choose **Open** the first time.
+- **"SafeSweep can't be opened":** the app is ad-hoc signed. Right-click it in Finder and choose **Open** the first time.
 - **Scan feels slow:** large Gradle or Docker folders take a while to measure. Rescans are faster once the file system metadata is cached.

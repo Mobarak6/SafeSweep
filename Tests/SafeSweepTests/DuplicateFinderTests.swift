@@ -1,5 +1,5 @@
 import XCTest
-@testable import StorageCleaner
+@testable import SafeSweep
 
 final class DuplicateFinderTests: XCTestCase {
     private var root: URL!

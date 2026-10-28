@@ -1,11 +1,11 @@
 import SwiftUI
 
 @main
-struct StorageCleanerApp: App {
+struct SafeSweepApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
-        WindowGroup("Storage Cleaner") {
+        WindowGroup("SafeSweep") {
             ContentView()
                 .frame(minWidth: 920, minHeight: 620)
         }
