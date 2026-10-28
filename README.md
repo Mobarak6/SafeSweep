@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/icon.png" width="160" alt="SafeSweep icon">
+</p>
+
 # SafeSweep
 
 A native macOS app that frees disk space **without risking your data**. It clears caches that rebuild themselves, finds byte-for-byte duplicate files, and surfaces the largest files on your disk, and by default everything it removes goes to the Trash so it can be restored.
@@ -86,6 +90,7 @@ make run
 | `make install` | Build `SafeSweep.app` and copy it to `~/Applications` (same as `./build.sh`) |
 | `make run` | Install and launch |
 | `make package` | Build a universal app and package `build/SafeSweep.dmg` and `build/SafeSweep.zip` |
+| `make icon` | Regenerate the app icon from [`scripts/make-icon.swift`](scripts/make-icon.swift) |
 | `make clean` | Delete `.build/` and `build/` |
 
 To work in Xcode, open `Package.swift` and run the `SafeSweep` scheme.
@@ -117,6 +122,9 @@ The app is not sandboxed, because it needs to read caches across your home folde
 SafeSweep/
 ├── Package.swift                  # SwiftPM manifest (macOS 14+)
 ├── Info.plist                     # App bundle metadata
+├── Resources/AppIcon.icns         # App icon (generated)
+├── scripts/make-icon.swift        # Draws the icon in code and builds AppIcon.icns
+├── docs/icon.png                  # Icon shown in this README (generated)
 ├── build.sh                       # Builds, signs, installs or packages the .app
 ├── Makefile                       # Convenience targets
 ├── CHANGELOG.md                   # Release notes

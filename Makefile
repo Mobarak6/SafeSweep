@@ -1,4 +1,4 @@
-.PHONY: build test app install run package clean
+.PHONY: build test app install run package icon clean
 
 build:        ## Compile a debug build
 	swift build
@@ -14,6 +14,9 @@ run: install  ## Build, install and launch the app
 
 package:      ## Build a universal app and package it as .dmg and .zip in build/
 	./build.sh --package
+
+icon:         ## Regenerate Resources/AppIcon.icns and docs/icon.png
+	swift scripts/make-icon.swift
 
 clean:        ## Remove build artifacts
 	rm -rf .build build
