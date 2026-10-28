@@ -133,3 +133,7 @@ These often dominate "System Data", but they are better managed by their owners:
 - **Space didn't change after cleaning:** items moved to the Trash still use space until you empty it. *Settings → Storage* can also take a few minutes to refresh.
 - **"SafeSweep can't be opened":** the app is ad-hoc signed. Right-click it in Finder and choose **Open** the first time.
 - **Scan feels slow:** large Gradle or Docker folders take a while to measure. Rescans are faster once the file system metadata is cached.
+
+## License
+
+Released under the [MIT License](LICENSE).
